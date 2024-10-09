@@ -46,6 +46,6 @@ Para executar a aplicação, siga estes passos:
 dotnet run --project .\CalculoCDB.Server\CalculoCDB.Server.csproj
 ```
 
-2. Acesse a aplicação web Angular no endereço http://localhost:4000.
+2. Acesse a aplicação web Angular no endereço https://localhost:4000.
 
 3. O swagger da API pode ser acessado no endereço https://localhost:7118/swagger/index.html. Os endpoints da API podem ser consumidos pelos endereços http://localhost:5150 e https://localhost:7118.
