@@ -1,0 +1,31 @@
+<div class="min-w-full min-h-svh flex items-start justify-center">
+  <main class="w-[800px] m-8 p-8 flex flex-col gap-4 items-center justify-center bg-slate-800 rounded-3xl">
+    <h1 class="text-3xl mb-4 font-semibold underline">Cálculo de CDB</h1>
+    <form (ngSubmit)="fetchCalculateCdb()" [formGroup]="calculateForm" action="#" class="space-y-6">
+      <div class="gap-2 flex justify-between items-center flex-wrap">
+        <label for="initialValue">Valor Inicial:</label>
+        <input class="flex-1" type="number" name="initialValue" placeholder="digite o valor"
+          formControlName="initialValue" required min="1" />
+      </div>
+      <div class="gap-2 flex justify-between items-center flex-wrap">
+        <label for="months">Número de meses:</label>
+        <input class="flex-1" type="number" name="months" placeholder="digite o período" formControlName="months"
+          required min="1" />
+      </div>
+
+      <input type="submit" class="w-full rounded-lg bg-slate-400" [disabled]="!calculateForm.valid"
+        value="Calcular Rendimento" />
+    </form>
+
+    <div *ngIf="calculateData.fee" class="w-full flex flex-col p-2 gap-2 border-t-2">
+      <h1 class="text-xl mb-4 font-semibold underline text-center">Resultado</h1>
+      <span>Valor inicial: {{ currencyFormatter.format(calculateData.initialValue) }}</span>
+      <span>Total de meses: {{ calculateData.months }}</span>
+      <span>Valor final bruto: {{ currencyFormatter.format(calculateData.grossIncome) }}</span>
+      <span class="text-green-700">Valor final líquido: {{ currencyFormatter.format(calculateData.netIncome) }}</span>
+      <hr>
+      <span>Valor de imposto: {{ currencyFormatter.format(calculateData.impostValue) }}</span>
+      <span>Taxa de imposto: {{ feeFormatter.format(calculateData.fee) }}</span>
+    </div>
+  </main>
+</div>

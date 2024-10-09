@@ -1,0 +1,10 @@
+@CalculoCDB.Server_HostAddress = http://localhost:5150
+
+// Success test
+GET {{CalculoCDB.Server_HostAddress}}/calculate?initialValue=1000.0&months=10
+Accept: application/json
+
+###
+// Error request, Bad Request
+GET {{CalculoCDB.Server_HostAddress}}/calculate?initialValue=test&months=test
+Accept: application/json
