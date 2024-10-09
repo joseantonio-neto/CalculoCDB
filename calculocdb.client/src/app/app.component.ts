@@ -43,7 +43,8 @@ export class AppComponent {
 
     if (!initialValue || initialValue <= 0 || !months || months <= 0) {
       this.toastr.warning(
-        'O Valor Inicial e Número de Meses devem ser maior que zero.'
+        'O Valor Inicial e Número de Meses devem ser maior que zero.',
+        'Atenção'
       );
       return;
     }

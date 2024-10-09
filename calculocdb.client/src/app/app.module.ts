@@ -16,9 +16,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     BrowserModule, AppRoutingModule, ReactiveFormsModule
   ],
   providers: [provideHttpClient(), provideAnimations(), provideToastr({
-    timeOut: 10000,
+    timeOut: 5000,
     positionClass: 'toast-bottom-right',
     preventDuplicates: true,
+    progressBar: true,
   })],
   bootstrap: [AppComponent]
 })
