@@ -17,6 +17,9 @@ namespace CalculoCDB.Server
 			builder.Services.AddSwaggerGen();
 
 			// Dependency injection
+			builder.Services.AddScoped<ICdiFeesService, FixedCdiFeesService>();
+			builder.Services.AddScoped<IBankFeesService, FixedBankFeesService>();
+			builder.Services.AddScoped<IImpostTaxesService, FixedImpostTaxesService>();
 			builder.Services.AddScoped<ICalculateService, CalculateService>();
 
 			var app = builder.Build();

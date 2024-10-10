@@ -17,7 +17,7 @@
         value="Calcular Rendimento" />
     </form>
 
-    <div *ngIf="calculateData.fee" class="w-full flex flex-col p-2 gap-2 border-t-2">
+    <div *ngIf="calculateData.initialValue" class="w-full flex flex-col p-2 gap-2 border-t-2">
       <h1 class="text-xl mb-4 font-semibold underline text-center">Resultado</h1>
       <span>Valor inicial: {{ currencyFormatter.format(calculateData.initialValue) }}</span>
       <span>Total de meses: {{ calculateData.months }}</span>

@@ -1,10 +1,18 @@
 ﻿using CalculoCDB.Server.Models;
+using System.Runtime.InteropServices;
 
 namespace CalculoCDB.Server.Services
 {
     public class CalculateService : ICalculateService
 	{
-		public CalculateService() { }
+		private readonly ICdiFeesService _cdiFeesService;
+		private readonly IBankFeesService _bankFeesService;
+		private readonly IImpostTaxesService _impostTaxesService;
+		public CalculateService(ICdiFeesService cdiFeesService, IBankFeesService bankFeesService, IImpostTaxesService impostTaxesService) {
+			_cdiFeesService = cdiFeesService;
+			_bankFeesService = bankFeesService;
+			_impostTaxesService = impostTaxesService;
+		}
 
 		public GetCalculateResponse Calculate(double initialValue, int months)
 		{
@@ -13,17 +21,17 @@ namespace CalculoCDB.Server.Services
 				throw new ArgumentException("The initialValue and months parameters must be greater than Zero.");
 			}
 
-			var cdi = FeesService.GetCdiTax();
-			var tb = FeesService.GetTbTax();
-			var fee = FeesService.GetFeeIncome(months);
+			var cdiFee = _cdiFeesService.GetCdiFee();
+			var bankFee = _bankFeesService.GetBankFee();
+			var impostTax = _impostTaxesService.GetImpostTax(months);
 
 			// Cálculo de Juros Compostos
 			// Valor final = Montante * (1 + Taxa) ^ Período )
-			var profit = initialValue * Math.Pow(1 + cdi * tb, months) - initialValue;
+			var finalValue = initialValue * Math.Pow(1 + cdiFee * bankFee, months);
 
-			var finalValue = initialValue + profit;
+			var profit = finalValue - initialValue;
 
-			var netProfit = profit * (1 - fee);
+			var netProfit = profit * (1 - impostTax);
 			var netFinalValue = initialValue + netProfit;
 
 			return new GetCalculateResponse
@@ -33,7 +41,7 @@ namespace CalculoCDB.Server.Services
 				GrossIncome = finalValue,
 				NetIncome = netFinalValue,
 				ImpostValue = finalValue - netFinalValue,
-				Fee = fee,
+				Fee = impostTax,
 			};
 		}
 	}
