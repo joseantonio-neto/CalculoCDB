@@ -1,9 +1,9 @@
-﻿using CalculoCDB.Server.DTO;
+﻿using CalculoCDB.Server.Models;
 
 namespace CalculoCDB.Server.Services
 {
-	public interface ICalculateService
+    public interface ICalculateService
 	{
-		GetCalculateResponse Calculate(decimal initialValue, int months);
+		GetCalculateResponse Calculate(double initialValue, int months);
 	}
 }

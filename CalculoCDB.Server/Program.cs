@@ -2,7 +2,8 @@ using CalculoCDB.Server.Services;
 
 namespace CalculoCDB.Server
 {
-	internal static class Program
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1118:Utility classes should not have public constructors", Justification = "Require a public Program class to implement the WebApplicationFactory in the integration tests.")]
+	public class Program
 	{
 		private static void Main(string[] args)
 		{
@@ -36,4 +37,4 @@ namespace CalculoCDB.Server
 			app.Run();
 		}
 	}
-}
+}	
