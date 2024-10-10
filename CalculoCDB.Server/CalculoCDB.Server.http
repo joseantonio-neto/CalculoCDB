@@ -5,16 +5,16 @@ GET {{CalculoCDB.Server_HostAddress}}/calculate?initialValue=1000.0&months=10
 Accept: application/json
 
 ###
-// Error request, Bad Request
+// Error request, Bad Request for non numeric
 GET {{CalculoCDB.Server_HostAddress}}/calculate?initialValue=test&months=test
 Accept: application/json
 
 ###
-// Error request, Bad Request
+// Error request, Bad Request for zero value
 GET {{CalculoCDB.Server_HostAddress}}/calculate?initialValue=0&months=10
 Accept: application/json
 
 ###
-// Error request, Bad Request
+// Error request, Bad Request for negative value
 GET {{CalculoCDB.Server_HostAddress}}/calculate?initialValue=1000&months=-10
 Accept: application/json
