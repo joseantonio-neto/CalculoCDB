@@ -7,6 +7,7 @@ O objetivo é realizar o cálculo de investimento, o usuário entra com os valor
 
 - [Instalação](#instalação)
 - [Execução](#execução)
+- [Testes](#testes)
 
 ## Instalação
 
@@ -23,7 +24,7 @@ Para instalar a aplicação, siga estes passos:
 git clone https://github.com/joseantonio-neto/CalculoCDB.git
 ```
 
-3. Navegue para a pasta do projeto:
+3. Navegue para o diretório da Solution:
 
 ```bash
 cd CalculoCDB
@@ -48,4 +49,36 @@ dotnet run --project .\CalculoCDB.Server\CalculoCDB.Server.csproj
 
 2. Acesse a aplicação web Angular no endereço https://localhost:4000.
 
-3. O swagger da API pode ser acessado no endereço https://localhost:7118/swagger/index.html. Os endpoints da API podem ser consumidos pelos endereços http://localhost:5150 e https://localhost:7118.
+3. O swagger da API pode ser acessado no endereço http://localhost:5150/swagger/index.html. Os endpoints da API podem ser consumidos pelos endereços http://localhost:5150 e https://localhost:7118.
+
+## Testes
+
+Para rodar os testes aplicação, siga estes passos:
+
+### WebAPI .Net
+
+1. Acessa o diretório da Solution:
+
+```bash
+cd CalculoCDB
+```
+
+2. Rodar o comando:
+
+```bash
+dotnet test
+```
+
+### WebApp Angular
+
+1. Acessa o diretório do projeto Angular:
+
+```bash
+cd CalculoCDB/calculocdb.client
+```
+
+2. Rodar o comando:
+
+```bash
+npm run test
+```

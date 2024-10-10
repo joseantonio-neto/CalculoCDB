@@ -1,8 +1,9 @@
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting, } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { GetCalculateResponse } from './services/models/getCalculateResponse'
+import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -12,16 +13,15 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      //imports: [HttpClientTestingModule],
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting()]
+      imports: [ReactiveFormsModule, FormsModule],
+      providers: [provideToastr(), provideHttpClient(), provideHttpClientTesting()]
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
+    component = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -33,20 +33,41 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should retrieve calculate data from the server', () => {
-    const mockCalculate = {
-      initialValue: 1000,
-      months: 10,
-      grossIncome: 1101.56,
-      netIncome: 1081.25,
-      impostValue: 20.31,
-      fee: 0.2
-    } as GetCalculateResponse;
+  it(`should have the 'Cálculo de CDB' title`, () => {
+    expect(component.title).toEqual('Cálculo de CDB');
+  });
 
-    const req = httpMock.expectOne('/calculate');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockCalculate);
+  it('should render the H1 element', () => {
+    const compiled = fixture.debugElement.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Cálculo de CDB');
+  });
 
-    expect(component.calculateData).toEqual(mockCalculate);
+  it('should the form be valid, button is disabled and fetch function called', async () => {
+    const compiled = fixture.debugElement.nativeElement as HTMLElement;
+
+    const initialValueInput = compiled.querySelector('input[name=initialValue]') as HTMLInputElement;
+    const monthsInput = compiled.querySelector('input[name=months]') as HTMLInputElement;
+    initialValueInput.value = '1000';
+    initialValueInput.dispatchEvent(new Event('input'));
+    monthsInput.value = '10';
+    monthsInput.dispatchEvent(new Event('input'));
+
+    // Form is valid
+    const isFormValid = component.calculateForm.valid
+    expect(isFormValid).toBeTruthy();
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // Button is enable
+    const buttonInput = compiled.querySelector('input[type=submit]') as HTMLInputElement;
+    const isButtonEnable = !buttonInput.disabled;
+    expect(isButtonEnable).toBeTruthy();
+
+    spyOn(component, 'fetchCalculateCdb');
+
+    buttonInput.click();
+
+    expect(component.fetchCalculateCdb).toHaveBeenCalledTimes(1);
   });
 });
